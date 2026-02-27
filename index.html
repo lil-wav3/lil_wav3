@@ -178,9 +178,35 @@
       background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,.72) 100%);
       pointer-events:none;
     }
-    .meta{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;display:flex;flex-direction:column;gap:2px}
+
+    /* base meta (kept) */
+    .meta{
+      position:absolute;
+      left:14px;
+      right:14px;
+      bottom:12px;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
     .meta strong{font-size:15px;font-weight:850;letter-spacing:-.01em}
-    .meta small{font-size:12px;color:rgba(248,250,252,.68)}
+    .meta small{font-size:12px;color:rgba(248,250,252,.68);line-height:1.2}
+
+    /* ✅ Discography: put year in bottom-right */
+    .release .meta{
+      left:auto;
+      right:14px;
+      bottom:14px;
+      text-align:right;
+      align-items:flex-end;
+      width:auto;
+    }
+    .release .meta small{
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(248,250,252,.78);
+    }
 
     footer{
       padding:34px 0 46px;
@@ -253,7 +279,7 @@
           </a>
 
           <!-- NEW: Close To Home -->
-          <a class="release" href="https://on.soundcloud.com/fsnvWDORdCIfPfA79O" target="_blank" rel="noreferrer">
+          <a class="release" href="https://soundcloud.com/lil-wav3/close-to-home" target="_blank" rel="noreferrer">
             <div class="cover" style="background-image:url('assets/close_to_home_no_sign_2.png');"></div>
             <div class="meta"><small>2025</small></div>
           </a>
