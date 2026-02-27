@@ -106,28 +106,19 @@
       max-width:820px; /* keeps Latest as a sleek rectangle (not full-width) */
     }
 
-    /* Latest hero layout w/ optional cover art */
-    .heroTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:22px;
-    }
-    .heroCopy{min-width:0}
-    .heroArtLink{display:inline-flex;flex:0 0 auto}
-    .heroArt{
-      width:170px;              /* tweak if you want: 140–200 */
-      aspect-ratio:4/3;         /* makes it a horizontal-ish rectangle */
+    /* Latest banner (wide + short) */
+    .heroBannerLink{display:block;margin-top:18px;text-decoration:none}
+    .heroBanner{
+      width:100%;
+      aspect-ratio:1057/290; /* your banner dimensions */
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       box-shadow:0 28px 70px rgba(0,0,0,.32);
       object-fit:cover;
       object-position:center;
+      display:block;
     }
-
-    @media (max-width:720px){
-      .heroTop{flex-direction:column; align-items:flex-start;}
-      .heroArt{width:140px; aspect-ratio:1/1;}
+.heroArt{width:140px; aspect-ratio:1/1;}
     }
     .kicker{
       display:inline-flex;align-items:center;gap:10px;
@@ -283,26 +274,22 @@
   <main>
     <div class="wrap">
       <section class="card hero">
-        <div class="heroTop">
-          <div class="heroCopy">
-            <div class="kicker"><span class="dot"></span> Latest</div>
-            <h1>migraine</h1>
-            <p class="sub">just riding life's waves 🌊🎵</p>
+        <div class="kicker"><span class="dot"></span> Latest</div>
+        <h1>migraine</h1>
+        <p class="sub">just riding life's waves 🌊🎵</p>
 
-            <div class="cta">
-              <a class="btn primary" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
-                Listen on SoundCloud
-              </a>
-            </div>
-          </div>
-
-          <!-- ✅ PLACE YOUR LATEST COVER HERE:
-               1) add your image to your repo at:  assets/latest_cover.png
-               2) or change the src filename below -->
-          <a class="heroArtLink" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer" aria-label="migraine cover">
-            <img class="heroArt" src="assets/latest_cover.png" alt="migraine cover" loading="lazy" />
+        <div class="cta">
+          <a class="btn primary" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
+            Listen on SoundCloud
           </a>
         </div>
+
+        <!-- ✅ PLACE YOUR LONG BANNER HERE:
+             1) add your image to your repo at:  assets/latest_banner.png
+             2) keep the filename, or change src below -->
+        <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer" aria-label="migraine banner">
+          <img class="heroBanner" src="assets/latest_banner.png" alt="migraine banner" loading="lazy" />
+        </a>
       </section>
 
       <section id="releases" class="section">
