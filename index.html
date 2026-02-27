@@ -101,33 +101,29 @@
       overflow:hidden;
     }
 
-    /* HERO */
-    .hero{padding:28px}
+    /* ✅ Latest card stays a sleek rectangle (not full width) */
+    .hero{
+      padding:28px;
+      max-width:980px;
+    }
 
+    /* ✅ Inline layout: copy left, banner right */
     .heroRow{
       display:flex;
       align-items:center;
-      gap:26px;
-      justify-content:flex-start; /* key: don’t shove banner to far right */
+      gap:18px;
     }
     .heroCopy{
-      flex:0 0 420px; /* left column width on desktop */
-      min-width:320px;
+      flex:1 1 auto;
+      min-width:280px;
     }
 
-    /* banner area fills remaining space, and centers banner within it */
-    .heroBannerWrap{
-      flex:1;
-      display:flex;
-      justify-content:center; /* centers banner within remaining space */
-      align-items:center;
-      min-width:0;
-    }
+    /* ✅ Banner sits on the right on desktop */
     .heroBannerLink{
-      display:block;
+      flex:0 0 auto;
+      margin-left:auto;
+      width:clamp(420px, 52%, 560px);
       text-decoration:none;
-      width:min(560px, 100%);
-      margin:0 auto;
     }
     .heroBanner{
       width:100%;
@@ -135,8 +131,8 @@
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       box-shadow:0 28px 70px rgba(0,0,0,.32);
-      object-fit:cover;          /* crops edges if needed */
-      object-position:center;    /* keep it centered */
+      object-fit:cover;
+      object-position:70% center; /* show a bit more of the right side */
       display:block;
     }
 
@@ -227,9 +223,10 @@
       flex-direction:column;
       gap:2px;
     }
+    .meta strong{font-size:15px;font-weight:850;letter-spacing:-.01em}
     .meta small{font-size:12px;color:rgba(248,250,252,.68);line-height:1.2}
 
-    /* Discography: put year in bottom-right */
+    /* ✅ Discography: year in bottom-right */
     .release .meta{
       left:auto;
       right:14px;
@@ -254,17 +251,22 @@
     .foot a{color:rgba(248,250,252,.72);text-decoration:none}
     .foot a:hover{color:rgba(253,211,42,.92)}
 
-    @media (max-width:980px){
-      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .heroCopy{flex-basis:380px}
-    }
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-    /* Mobile: stack nicely, remove weird empty space */
-    @media (max-width:760px){
-      .heroRow{flex-direction:column;align-items:flex-start}
-      .heroCopy{flex:1 1 auto;min-width:0}
-      .heroBannerWrap{width:100%;justify-content:center;margin-top:14px}
-      .heroBannerLink{width:100%}
+    /* ✅ Mobile fix: no giant gap */
+    @media (max-width:900px){
+      .heroRow{
+        flex-direction:column;
+        align-items:stretch;
+        gap:14px;
+      }
+      .heroBannerLink{
+        margin-left:0;
+        width:100%;
+      }
+      .heroBanner{
+        object-position:70% center;
+      }
     }
 
     @media (max-width:560px){
@@ -286,7 +288,7 @@
         </a>
 
         <div class="links">
-          <!-- SoundCloud -->
+          <!-- SoundCloud (fixed link) -->
           <a class="pill icon" href="https://soundcloud.com/lil-wav3" target="_blank" rel="noreferrer" aria-label="SoundCloud">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M11.5 7.2c-.3 0-.6 0-.9.1-.2 0-.4.2-.4.4v10.2c0 .2.2.4.4.4h6.7c2 0 3.6-1.6 3.6-3.6 0-2-1.6-3.6-3.6-3.6-.4 0-.8.1-1.2.2-.7-1.7-2.4-2.9-4.6-2.9zM7.8 9.1c-.2 0-.4.2-.4.4v8.3c0 .2.2.4.4.4s.4-.2.4-.4V9.5c0-.2-.2-.4-.4-.4zM5.8 10c-.2 0-.4.2-.4.4v7.4c0 .2.2.4.4.4s.4-.2.4-.4v-7.4c0-.2-.2-.4-.4-.4zM3.9 11c-.2 0-.4.2-.4.4v6.4c0 .2.2.4.4.4s.4-.2.4-.4v-6.4c0-.2-.2-.4-.4-.4z"/>
@@ -306,6 +308,7 @@
 
   <main>
     <div class="wrap">
+
       <section class="card hero">
         <div class="heroRow">
           <div class="heroCopy">
@@ -320,13 +323,11 @@
             </div>
           </div>
 
-          <!-- Banner (wide + short) -->
-          <div class="heroBannerWrap">
-            <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer" aria-label="migraine banner">
-              <!-- PLACE YOUR BANNER IMAGE HERE -->
-              <img class="heroBanner" src="assets/latest_banner_migraine.png" alt="migraine banner" loading="lazy" />
-            </a>
-          </div>
+          <!-- ✅ Long skinny banner (inline on desktop, stacked on mobile) -->
+          <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer" aria-label="migraine banner">
+            <!-- put your 1057×290 banner at: assets/latest_banner_migraine.png -->
+            <img class="heroBanner" src="assets/latest_banner_migraine.png" alt="migraine banner" loading="lazy" />
+          </a>
         </div>
       </section>
 
@@ -341,12 +342,13 @@
             <div class="meta"><small>2026</small></div>
           </a>
 
-          <a class="release" href="https://soundcloud.com/lil-wav3/close-to-home" target="_blank" rel="noreferrer">
+          <a class="release" href="https://on.soundcloud.com/fsnvWDORdCIfPfA79O" target="_blank" rel="noreferrer">
             <div class="cover" style="background-image:url('assets/close_to_home_no_sign_2.png');"></div>
             <div class="meta"><small>2025</small></div>
           </a>
         </div>
       </section>
+
     </div>
   </main>
 
