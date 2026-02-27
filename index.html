@@ -63,6 +63,7 @@
       letter-spacing:.14em;text-transform:uppercase;font-weight:850;font-size:14px;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
+
     .links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .pill{
       display:inline-flex;align-items:center;gap:8px;
@@ -77,6 +78,18 @@
       transform:translateY(-1px);
       border-color:rgba(36,101,188,.45);
       background:rgba(255,255,255,.06);
+    }
+
+    /* icon-only pills */
+    .pill.icon{
+      width:40px;height:40px;
+      padding:0;
+      justify-content:center;
+    }
+    .pill.icon svg{
+      width:18px;height:18px;
+      display:block;
+      fill:currentColor;
     }
 
     main{padding:56px 0 74px}
@@ -194,10 +207,24 @@
           <div class="mark" aria-hidden="true"></div>
           <strong>lil wav3</strong>
         </a>
+
         <div class="links">
+          <!-- keep Releases in the middle -->
           <a class="pill" href="#releases">Releases</a>
-          <a class="pill" href="https://soundcloud.com/lil-wav3" target="_blank" rel="noreferrer">SoundCloud</a>
-          <a class="pill" href="https://instagram.com/lil-wav3" target="_blank" rel="noreferrer">Instagram</a>
+
+          <!-- SoundCloud icon (fixed link) -->
+          <a class="pill icon" href="https://soundcloud.com/lil-wav3" target="_blank" rel="noreferrer" aria-label="SoundCloud">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11.5 7.2c-.3 0-.6 0-.9.1-.2 0-.4.2-.4.4v10.2c0 .2.2.4.4.4h6.7c2 0 3.6-1.6 3.6-3.6 0-2-1.6-3.6-3.6-3.6-.4 0-.8.1-1.2.2-.7-1.7-2.4-2.9-4.6-2.9zM7.8 9.1c-.2 0-.4.2-.4.4v8.3c0 .2.2.4.4.4s.4-.2.4-.4V9.5c0-.2-.2-.4-.4-.4zM5.8 10c-.2 0-.4.2-.4.4v7.4c0 .2.2.4.4.4s.4-.2.4-.4v-7.4c0-.2-.2-.4-.4-.4zM3.9 11c-.2 0-.4.2-.4.4v6.4c0 .2.2.4.4.4s.4-.2.4-.4v-6.4c0-.2-.2-.4-.4-.4z"/>
+            </svg>
+          </a>
+
+          <!-- TikTok icon -->
+          <a class="pill icon" href="https://www.tiktok.com/@lil_wav3" target="_blank" rel="noreferrer" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15.2 3c.3 2.3 1.7 3.8 4.1 3.9v3.2c-1.5.1-2.8-.4-4-.9v6.2c0 3.8-3.5 6.1-6.9 4.7-3.2-1.3-4-5.8-1.5-8.2 1.4-1.4 3.2-1.7 4.7-1.4v3.3c-.5-.2-1.3-.2-1.9.1-1.2.6-1.5 2.3-.6 3.3 1 1.1 3 .8 3.6-.6.2-.4.2-.9.2-1.4V3h2.3z"/>
+            </svg>
+          </a>
         </div>
       </nav>
     </div>
@@ -208,7 +235,7 @@
       <section class="card hero">
         <div class="kicker"><span class="dot"></span> Latest</div>
         <h1>migraine</h1>
-        <p class="sub">just riding life's  🌊</p>
+        <p class="sub">just riding life's waves 🌊🎵</p>
 
         <div class="cta">
           <a class="btn primary" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
@@ -250,9 +277,8 @@
       <div class="foot">
         <div>© <span id="y"></span> lil wav3</div>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="mailto:you@email.com">Email</a>
           <a href="https://soundcloud.com/lil-wav3" target="_blank" rel="noreferrer">SoundCloud</a>
-          <a href="https://instagram.com/YOURHANDLE" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.tiktok.com/@lil_wav3" target="_blank" rel="noreferrer">TikTok</a>
         </div>
       </div>
     </div>
