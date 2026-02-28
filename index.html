@@ -50,9 +50,79 @@
       position:sticky;top:0;z-index:1000;
       background:rgba(7,10,18,.78);
       backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      border-bottom:0; /* replaced by the animated line */
+      isolation:isolate; /* keeps layering clean */
     }
-    nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+    nav{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:18px 0;
+      position:relative;z-index:2; /* keep nav above the glow */
+    }
+
+    /* ✅ subtle base line (premium) */
+    header::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:1px;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,.00),
+        rgba(255,255,255,.12),
+        rgba(255,255,255,.00)
+      );
+      z-index:0;
+      pointer-events:none;
+    }
+
+    /* ✅ premium glow sweep (orange -> yellow) */
+    header::before{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+
+      height:3px;        /* core thickness */
+      width:52%;         /* sweep head width */
+
+      background:linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0%,
+        rgba(240,150,16,.00) 12%,
+        rgba(240,150,16,.75) 32%,
+        rgba(253,211,42,1.00) 50%,
+        rgba(240,150,16,.75) 68%,
+        rgba(240,150,16,.00) 88%,
+        rgba(0,0,0,0) 100%
+      );
+
+      box-shadow:
+        0 0 10px rgba(253,211,42,.35),
+        0 0 22px rgba(240,150,16,.22),
+        0 0 42px rgba(253,211,42,.14);
+
+      filter:saturate(1.15);
+      transform:translateX(-120%);
+      opacity:0;
+
+      /* ✅ slow + smooth (adjust 7.5s to 10s if you want even slower) */
+      animation:headerSweep 7.5s cubic-bezier(.45,0,.20,1) infinite;
+
+      z-index:1;
+      pointer-events:none;
+    }
+
+    @keyframes headerSweep{
+      0%   { transform:translateX(-120%); opacity:0; }
+      10%  { opacity:1; }
+      88%  { opacity:1; }
+      100% { transform:translateX(320%); opacity:0; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      header::before{ animation:none; opacity:0; }
+    }
+
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);min-width:0}
     .mark{
       width:34px;height:34px;border-radius:12px;
@@ -127,12 +197,12 @@
     }
     .heroBanner{
       width:100%;
-      aspect-ratio:1057/290; /* your banner dimensions */
+      aspect-ratio:1057/290;
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       box-shadow:0 28px 70px rgba(0,0,0,.32);
       object-fit:cover;
-      object-position:70% center; /* show a bit more of the right side */
+      object-position:70% center;
       display:block;
     }
 
@@ -321,9 +391,7 @@
             </div>
           </div>
 
-          <!-- ✅ Long skinny banner (inline on desktop, stacked on mobile) -->
           <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer" aria-label="migraine banner">
-            <!-- put your 1057×290 banner at: assets/latest_banner_migraine.png -->
             <img class="heroBanner" src="assets/latest_banner_migraine.png" alt="migraine banner" loading="lazy" />
           </a>
         </div>
@@ -335,7 +403,6 @@
         </div>
 
         <div class="grid">
-          <!-- ✅ PLACEHOLDER FIRST -->
           <a class="release" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
             <div class="cover" style="background-image:url('assets/migraine_no_sign.png');"></div>
             <div class="meta"><small>2026</small></div>
