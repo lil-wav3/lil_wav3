@@ -25,6 +25,7 @@
       --blue:#2465bc;
 
       --r:22px;
+      --gap:14px;
     }
 
     *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
@@ -50,16 +51,15 @@
       position:sticky;top:0;z-index:1000;
       background:rgba(7,10,18,.78);
       backdrop-filter:blur(14px);
-      border-bottom:0; /* replaced by the animated line */
-      isolation:isolate; /* keeps layering clean */
+      border-bottom:0;
+      isolation:isolate;
     }
     nav{
       display:flex;align-items:center;justify-content:space-between;
       gap:16px;padding:18px 0;
-      position:relative;z-index:2; /* keep nav above the glow */
+      position:relative;z-index:2;
     }
 
-    /* ✅ subtle base line (premium) */
     header::after{
       content:"";
       position:absolute;
@@ -75,15 +75,14 @@
       pointer-events:none;
     }
 
-    /* ✅ premium glow sweep (orange -> yellow) */
     header::before{
       content:"";
       position:absolute;
       left:0;
       bottom:0;
 
-      height:3px;        /* core thickness */
-      width:52%;         /* sweep head width */
+      height:3px;
+      width:52%;
 
       background:linear-gradient(
         90deg,
@@ -105,7 +104,6 @@
       transform:translateX(-120%);
       opacity:0;
 
-      /* ✅ slow + smooth (adjust 7.5s to 10s if you want even slower) */
       animation:headerSweep 15s cubic-bezier(.45,0,.20,1) infinite;
 
       z-index:1;
@@ -150,7 +148,6 @@
       background:rgba(255,255,255,.06);
     }
 
-    /* icon-only pills */
     .pill.icon{
       width:50px;height:50px;
       padding:0;
@@ -171,13 +168,11 @@
       overflow:hidden;
     }
 
-    /* ✅ Latest card stays a sleek rectangle (not full width) */
     .hero{
       padding:28px;
       max-width:980px;
     }
 
-    /* ✅ Inline layout: copy left, banner right */
     .heroRow{
       display:flex;
       align-items:center;
@@ -188,7 +183,6 @@
       min-width:280px;
     }
 
-    /* ✅ Banner sits on the right on desktop */
     .heroBannerLink{
       flex:0 0 auto;
       margin-left:auto;
@@ -235,7 +229,6 @@
       user-select:none;
     }
 
-    /* orange -> yellow */
     .primary{
       background:linear-gradient(180deg, var(--orange), var(--yellow));
       color:#0B0E14;
@@ -251,15 +244,44 @@
     .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:18px 2px 12px}
     .sectionHead h2{margin:0;font-size:18px;font-weight:850;letter-spacing:-.01em}
 
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    /* ✅ Desktop carousel wrapper */
+    .discCarousel{
+      position:relative;
+    }
+    .discViewport{
+      overflow-x:auto;
+      overflow-y:hidden;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+      border-radius:18px; /* subtle polish */
+      scrollbar-width:none; /* Firefox */
+    }
+    .discViewport::-webkit-scrollbar{ display:none; } /* WebKit */
+
+    /* ✅ Track */
+    .grid{
+      display:flex;
+      gap:var(--gap);
+      padding:0; /* keep clean */
+      scroll-snap-type:x mandatory;
+    }
+
     .release{
-      position:relative;border-radius:18px;overflow:hidden;
+      display:block;
+      position:relative;
+      border-radius:18px;overflow:hidden;
       border:1px solid rgba(36,101,188,.22);
       background:rgba(255,255,255,.02);
       text-decoration:none;color:var(--text);
       transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
       box-shadow:0 24px 60px rgba(0,0,0,.22);
       isolation:isolate;
+
+      /* 3-up sizing */
+      flex:0 0 calc((100% - (var(--gap) * 2)) / 3);
+      min-width:0;
+
+      scroll-snap-align:start;
     }
     .release:hover{
       transform:translateY(-3px);
@@ -294,7 +316,6 @@
     }
     .meta small{font-size:12px;color:rgba(248,250,252,.68);line-height:1.2}
 
-    /* ✅ Discography: year in bottom-right */
     .release .meta{
       left:auto;
       right:14px;
@@ -309,6 +330,55 @@
       color:rgba(248,250,252,.78);
     }
 
+    /* ✅ Carousel arrows (desktop only) */
+    .carBtn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:44px;height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(7,10,18,.55);
+      backdrop-filter:blur(10px);
+      display:grid;place-items:center;
+      cursor:pointer;
+      z-index:5;
+      box-shadow:0 18px 50px rgba(0,0,0,.35);
+      transition:transform .18s ease, border-color .18s ease, background .18s ease, opacity .18s ease;
+    }
+    .carBtn:hover{
+      transform:translateY(-50%) scale(1.03);
+      border-color:rgba(253,211,42,.45);
+      background:rgba(7,10,18,.70);
+    }
+    .carBtn:disabled{
+      opacity:.35;
+      cursor:default;
+    }
+    .carBtn svg{ width:18px; height:18px; fill:rgba(248,250,252,.86); }
+
+    .carPrev{ left:-10px; }
+    .carNext{ right:-10px; }
+
+    /* subtle edge fades (desktop polish) */
+    .discCarousel::before,
+    .discCarousel::after{
+      content:"";
+      position:absolute;
+      top:0;bottom:0;
+      width:34px;
+      pointer-events:none;
+      z-index:4;
+    }
+    .discCarousel::before{
+      left:0;
+      background:linear-gradient(90deg, rgba(7,10,18,.85), rgba(7,10,18,0));
+    }
+    .discCarousel::after{
+      right:0;
+      background:linear-gradient(270deg, rgba(7,10,18,.85), rgba(7,10,18,0));
+    }
+
     footer{
       padding:34px 0 46px;
       border-top:1px solid rgba(255,255,255,.06);
@@ -319,9 +389,19 @@
     .foot a{color:rgba(248,250,252,.72);text-decoration:none}
     .foot a:hover{color:rgba(253,211,42,.92)}
 
-    @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    /* ✅ Tablet/mobile: revert to vertical grid + no arrows */
+    @media (max-width:980px){
+      .discCarousel::before,.discCarousel::after{ display:none; }
+      .carBtn{ display:none; }
+      .discViewport{ overflow:visible; }
+      .grid{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        scroll-snap-type:none;
+      }
+      .release{ flex:initial; }
+    }
 
-    /* ✅ Mobile fix: no giant gap */
     @media (max-width:900px){
       .heroRow{
         flex-direction:column;
@@ -356,14 +436,12 @@
         </a>
 
         <div class="links">
-          <!-- SoundCloud (fixed link) -->
           <a class="pill icon" href="https://soundcloud.com/lil-wav3" target="_blank" rel="noreferrer" aria-label="SoundCloud">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M11.5 7.2c-.3 0-.6 0-.9.1-.2 0-.4.2-.4.4v10.2c0 .2.2.4.4.4h6.7c2 0 3.6-1.6 3.6-3.6 0-2-1.6-3.6-3.6-3.6-.4 0-.8.1-1.2.2-.7-1.7-2.4-2.9-4.6-2.9zM7.8 9.1c-.2 0-.4.2-.4.4v8.3c0 .2.2.4.4.4s.4-.2.4-.4V9.5c0-.2-.2-.4-.4-.4zM5.8 10c-.2 0-.4.2-.4.4v7.4c0 .2.2.4.4.4s.4-.2.4-.4v-7.4c0-.2-.2-.4-.4-.4zM3.9 11c-.2 0-.4.2-.4.4v6.4c0 .2.2.4.4.4s.4-.2.4-.4v-6.4c0-.2-.2-.4-.4-.4z"/>
             </svg>
           </a>
 
-          <!-- TikTok -->
           <a class="pill icon" href="https://www.tiktok.com/@lilwav3_sb" target="_blank" rel="noreferrer" aria-label="TikTok">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M15.2 3c.3 2.3 1.7 3.8 4.1 3.9v3.2c-1.5.1-2.8-.4-4-.9v6.2c0 3.8-3.5 6.1-6.9 4.7-3.2-1.3-4-5.8-1.5-8.2 1.4-1.4 3.2-1.7 4.7-1.4v3.3c-.5-.2-1.3-.2-1.9.1-1.2.6-1.5 2.3-.6 3.3 1 1.1 3 .8 3.6-.6.2-.4.2-.9.2-1.4V3h2.3z"/>
@@ -381,7 +459,7 @@
         <div class="heroRow">
           <div class="heroCopy">
             <div class="kicker"><span class="dot"></span> Latest</div>
-            <h1>coke & mentos</h1>
+            <h1>coke &amp; mentos</h1>
             <p class="sub">just riding life's waves 🌊🎵</p>
 
             <div class="cta">
@@ -391,8 +469,8 @@
             </div>
           </div>
 
-          <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/coke_mentos" target="_blank" rel="noreferrer" aria-label="migraine banner">
-            <img class="heroBanner" src="assets/latest_banner_coke&mentos.png" alt="migraine banner" loading="lazy" />
+          <a class="heroBannerLink" href="https://soundcloud.com/lil-wav3/coke_mentos" target="_blank" rel="noreferrer" aria-label="coke & mentos banner">
+            <img class="heroBanner" src="assets/latest_banner_coke&mentos.png" alt="coke & mentos banner" loading="lazy" />
           </a>
         </div>
       </section>
@@ -402,21 +480,41 @@
           <h2>Discography</h2>
         </div>
 
-        <div class="grid">
-          <a class="release" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
-            <div class="cover" style="background-image:url('assets/migraine_no_sign.png');"></div>
-            <div class="meta"><small>2026</small></div>
-          </a>
+        <div class="discCarousel">
+          <!-- arrows (desktop) -->
+          <button class="carBtn carPrev" id="discPrev" aria-label="Previous releases">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5.5a1 1 0 0 1 0 1.4L10.4 12l5.1 5.1a1 1 0 1 1-1.4 1.4l-5.8-5.8a1 1 0 0 1 0-1.4l5.8-5.8a1 1 0 0 1 1.4 0z"/></svg>
+          </button>
+          <button class="carBtn carNext" id="discNext" aria-label="Next releases">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 18.5a1 1 0 0 1 0-1.4L13.6 12 8.5 6.9a1 1 0 1 1 1.4-1.4l5.8 5.8a1 1 0 0 1 0 1.4l-5.8 5.8a1 1 0 0 1-1.4 0z"/></svg>
+          </button>
 
-          <a class="release" href="https://soundcloud.com/lil-wav3/waves" target="_blank" rel="noreferrer">
-            <div class="cover" style="background-image:url('assets/waves_no_sign.png');"></div>
-            <div class="meta"><small>2026</small></div>
-          </a>
+          <div class="discViewport" id="discViewport">
+            <div class="grid" id="discTrack">
+              <!-- ✅ NEW BOX FIRST -->
+              <a class="release" href="https://soundcloud.com/lil-wav3/coke_mentos" target="_blank" rel="noreferrer">
+                <!-- placeholder cover path -->
+                <div class="cover" style="background-image:url('assets/coke_mentos_no_sign.png');"></div>
+                <div class="meta"><small>2026</small></div>
+              </a>
 
-          <a class="release" href="https://soundcloud.com/lil-wav3/close-to-home" target="_blank" rel="noreferrer">
-            <div class="cover" style="background-image:url('assets/close_to_home_no_sign_2.png');"></div>
-            <div class="meta"><small>2024</small></div>
-          </a>
+              <a class="release" href="https://soundcloud.com/lil-wav3/migraine" target="_blank" rel="noreferrer">
+                <div class="cover" style="background-image:url('assets/migraine_no_sign.png');"></div>
+                <div class="meta"><small>2026</small></div>
+              </a>
+
+              <a class="release" href="https://soundcloud.com/lil-wav3/waves" target="_blank" rel="noreferrer">
+                <div class="cover" style="background-image:url('assets/waves_no_sign.png');"></div>
+                <div class="meta"><small>2026</small></div>
+              </a>
+
+              <!-- ✅ 4th exists (reachable via arrow) -->
+              <a class="release" href="https://soundcloud.com/lil-wav3/close-to-home" target="_blank" rel="noreferrer">
+                <div class="cover" style="background-image:url('assets/close_to_home_no_sign_2.png');"></div>
+                <div class="meta"><small>2024</small></div>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -437,6 +535,43 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Desktop-only "page" scroll for discography
+    (function(){
+      const viewport = document.getElementById("discViewport");
+      const btnPrev = document.getElementById("discPrev");
+      const btnNext = document.getElementById("discNext");
+
+      if (!viewport || !btnPrev || !btnNext) return;
+
+      const isDesktop = () => window.matchMedia("(min-width: 981px)").matches;
+
+      const updateBtns = () => {
+        if (!isDesktop()){
+          btnPrev.disabled = true;
+          btnNext.disabled = true;
+          return;
+        }
+        const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+        btnPrev.disabled = viewport.scrollLeft <= 2;
+        btnNext.disabled = viewport.scrollLeft >= (maxScroll - 2);
+      };
+
+      const scrollPage = (dir) => {
+        if (!isDesktop()) return;
+        const amount = viewport.clientWidth; // one "page" (3 cards)
+        viewport.scrollBy({ left: dir * amount, behavior: "smooth" });
+      };
+
+      btnPrev.addEventListener("click", () => scrollPage(-1));
+      btnNext.addEventListener("click", () => scrollPage(1));
+
+      viewport.addEventListener("scroll", updateBtns, { passive: true });
+      window.addEventListener("resize", updateBtns);
+
+      // initial state
+      updateBtns();
+    })();
   </script>
 </body>
 </html>
