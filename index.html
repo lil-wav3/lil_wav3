@@ -51,15 +51,16 @@
       position:sticky;top:0;z-index:1000;
       background:rgba(7,10,18,.78);
       backdrop-filter:blur(14px);
-      border-bottom:0;
-      isolation:isolate;
+      border-bottom:0; /* replaced by the animated line */
+      isolation:isolate; /* keeps layering clean */
     }
     nav{
       display:flex;align-items:center;justify-content:space-between;
       gap:16px;padding:18px 0;
-      position:relative;z-index:2;
+      position:relative;z-index:2; /* keep nav above the glow */
     }
 
+    /* ✅ subtle base line (premium) */
     header::after{
       content:"";
       position:absolute;
@@ -75,14 +76,15 @@
       pointer-events:none;
     }
 
+    /* ✅ premium glow sweep (orange -> yellow) */
     header::before{
       content:"";
       position:absolute;
       left:0;
       bottom:0;
 
-      height:3px;
-      width:52%;
+      height:3px;        /* core thickness */
+      width:52%;         /* sweep head width */
 
       background:linear-gradient(
         90deg,
@@ -148,6 +150,7 @@
       background:rgba(255,255,255,.06);
     }
 
+    /* icon-only pills */
     .pill.icon{
       width:50px;height:50px;
       padding:0;
@@ -168,11 +171,13 @@
       overflow:hidden;
     }
 
+    /* ✅ Latest card stays a sleek rectangle (not full width) */
     .hero{
       padding:28px;
       max-width:980px;
     }
 
+    /* ✅ Inline layout: copy left, banner right */
     .heroRow{
       display:flex;
       align-items:center;
@@ -183,6 +188,7 @@
       min-width:280px;
     }
 
+    /* ✅ Banner sits on the right on desktop */
     .heroBannerLink{
       flex:0 0 auto;
       margin-left:auto;
@@ -191,12 +197,12 @@
     }
     .heroBanner{
       width:100%;
-      aspect-ratio:1057/290;
+      aspect-ratio:1057/290; /* your banner dimensions */
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       box-shadow:0 28px 70px rgba(0,0,0,.32);
       object-fit:cover;
-      object-position:70% center;
+      object-position:70% center; /* show a bit more of the right side */
       display:block;
     }
 
@@ -229,6 +235,7 @@
       user-select:none;
     }
 
+    /* orange -> yellow */
     .primary{
       background:linear-gradient(180deg, var(--orange), var(--yellow));
       color:#0B0E14;
@@ -245,31 +252,27 @@
     .sectionHead h2{margin:0;font-size:18px;font-weight:850;letter-spacing:-.01em}
 
     /* ✅ Desktop carousel wrapper */
-    .discCarousel{
-      position:relative;
-    }
+    .discCarousel{ position:relative; }
     .discViewport{
-      overflow-x:auto;
-      overflow-y:hidden;
+      overflow-x:auto; overflow-y:hidden;
       scroll-behavior:smooth;
       -webkit-overflow-scrolling:touch;
-      border-radius:18px; /* subtle polish */
-      scrollbar-width:none; /* Firefox */
+      border-radius:18px;
+      scrollbar-width:none;
     }
-    .discViewport::-webkit-scrollbar{ display:none; } /* WebKit */
+    .discViewport::-webkit-scrollbar{ display:none; }
 
     /* ✅ Track */
     .grid{
       display:flex;
       gap:var(--gap);
-      padding:0; /* keep clean */
+      padding:0;
       scroll-snap-type:x mandatory;
     }
 
     .release{
       display:block;
-      position:relative;
-      border-radius:18px;overflow:hidden;
+      position:relative;border-radius:18px;overflow:hidden;
       border:1px solid rgba(36,101,188,.22);
       background:rgba(255,255,255,.02);
       text-decoration:none;color:var(--text);
@@ -277,7 +280,7 @@
       box-shadow:0 24px 60px rgba(0,0,0,.22);
       isolation:isolate;
 
-      /* 3-up sizing */
+      /* shows 3 at a time on desktop */
       flex:0 0 calc((100% - (var(--gap) * 2)) / 3);
       min-width:0;
 
@@ -316,6 +319,7 @@
     }
     .meta small{font-size:12px;color:rgba(248,250,252,.68);line-height:1.2}
 
+    /* ✅ Discography: year in bottom-right */
     .release .meta{
       left:auto;
       right:14px;
@@ -357,26 +361,27 @@
     }
     .carBtn svg{ width:18px; height:18px; fill:rgba(248,250,252,.86); }
 
-    .carPrev{ left:-10px; }
-    .carNext{ right:-10px; }
+    /* ✅ tiny nudge OUTWARD so they don't vignette covers */
+    .carPrev{ left:-22px; }
+    .carNext{ right:-22px; }
 
-    /* subtle edge fades (desktop polish) */
+    /* ✅ softer edge fades (less dark on covers) */
     .discCarousel::before,
     .discCarousel::after{
       content:"";
       position:absolute;
       top:0;bottom:0;
-      width:34px;
+      width:22px;
       pointer-events:none;
       z-index:4;
     }
     .discCarousel::before{
       left:0;
-      background:linear-gradient(90deg, rgba(7,10,18,.85), rgba(7,10,18,0));
+      background:linear-gradient(90deg, rgba(7,10,18,.70), rgba(7,10,18,0));
     }
     .discCarousel::after{
       right:0;
-      background:linear-gradient(270deg, rgba(7,10,18,.85), rgba(7,10,18,0));
+      background:linear-gradient(270deg, rgba(7,10,18,.70), rgba(7,10,18,0));
     }
 
     footer{
@@ -389,19 +394,15 @@
     .foot a{color:rgba(248,250,252,.72);text-decoration:none}
     .foot a:hover{color:rgba(253,211,42,.92)}
 
-    /* ✅ Tablet/mobile: revert to vertical grid + no arrows */
     @media (max-width:980px){
       .discCarousel::before,.discCarousel::after{ display:none; }
       .carBtn{ display:none; }
       .discViewport{ overflow:visible; }
-      .grid{
-        display:grid;
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        scroll-snap-type:none;
-      }
+      .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); scroll-snap-type:none; }
       .release{ flex:initial; }
     }
 
+    /* ✅ Mobile fix: no giant gap */
     @media (max-width:900px){
       .heroRow{
         flex-direction:column;
@@ -481,7 +482,6 @@
         </div>
 
         <div class="discCarousel">
-          <!-- arrows (desktop) -->
           <button class="carBtn carPrev" id="discPrev" aria-label="Previous releases">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5.5a1 1 0 0 1 0 1.4L10.4 12l5.1 5.1a1 1 0 1 1-1.4 1.4l-5.8-5.8a1 1 0 0 1 0-1.4l5.8-5.8a1 1 0 0 1 1.4 0z"/></svg>
           </button>
@@ -491,9 +491,7 @@
 
           <div class="discViewport" id="discViewport">
             <div class="grid" id="discTrack">
-              <!-- ✅ NEW BOX FIRST -->
               <a class="release" href="https://soundcloud.com/lil-wav3/coke_mentos" target="_blank" rel="noreferrer">
-                <!-- placeholder cover path -->
                 <div class="cover" style="background-image:url('assets/coke_mentos_no_sign.png');"></div>
                 <div class="meta"><small>2026</small></div>
               </a>
@@ -508,7 +506,6 @@
                 <div class="meta"><small>2026</small></div>
               </a>
 
-              <!-- ✅ 4th exists (reachable via arrow) -->
               <a class="release" href="https://soundcloud.com/lil-wav3/close-to-home" target="_blank" rel="noreferrer">
                 <div class="cover" style="background-image:url('assets/close_to_home_no_sign_2.png');"></div>
                 <div class="meta"><small>2024</small></div>
@@ -536,7 +533,6 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Desktop-only "page" scroll for discography
     (function(){
       const viewport = document.getElementById("discViewport");
       const btnPrev = document.getElementById("discPrev");
@@ -559,7 +555,7 @@
 
       const scrollPage = (dir) => {
         if (!isDesktop()) return;
-        const amount = viewport.clientWidth; // one "page" (3 cards)
+        const amount = viewport.clientWidth;
         viewport.scrollBy({ left: dir * amount, behavior: "smooth" });
       };
 
@@ -569,7 +565,6 @@
       viewport.addEventListener("scroll", updateBtns, { passive: true });
       window.addEventListener("resize", updateBtns);
 
-      // initial state
       updateBtns();
     })();
   </script>
